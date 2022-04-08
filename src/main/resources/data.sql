@@ -4,4 +4,3 @@ insert into User (user_id,user_fname,user_lname,user_email,user_pass,user_mobile
 insert into User (user_id,user_fname,user_lname,user_email,user_pass,user_mobile) values (4,'Peter','Parker','peter.parker@gmail.com','pet_er@9','9871117542');
 insert into User (user_id,user_fname,user_lname,user_email,user_pass,user_mobile) values (5,'Mike','Mike','mikemike','mike!QAZ','9871117542');
 CREATE TABLE SortNumber (user_name VARCHAR(50), user_number INT);
-insert into SortNumber (user_name,user_number) values ('Mike',542);

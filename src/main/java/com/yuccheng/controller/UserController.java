@@ -57,20 +57,10 @@ public class UserController {
 
 	@GetMapping("/main")
 	public String main() throws InterruptedException {
-		//////////////
-		SortNumber model = new SortNumber();
-		model.setUser_name("Mike");
-		model.setUser_number(1);
-		sortrepo.save(model);
-		List<SortNumber> a = sortrepo.findByUsername("Mike");
-		System.out.println(a);
-
-		//////////////
 		List<SortNumber> dataList = new ArrayList<SortNumber>();
 		ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-//		ScheduledFuture<?> future = 
 		long oneDay = 24 * 60 * 60 * 1000;
-		long iniDelay = getTime("16:50:00") - System.currentTimeMillis();
+		long iniDelay = getTime("19:29:00") - System.currentTimeMillis();
 		iniDelay = iniDelay > 0 ? iniDelay : oneDay + iniDelay;
 		boolean save = false;
 		executor.scheduleAtFixedRate(
@@ -81,19 +71,21 @@ public class UserController {
 					public void run() {
 						try {
 							List<SortNumber> JavaStreamSortdataList = JavaStreamSortService.getData();
+							JavaStreamSortdataList.forEach(System.out::println);
 							List<SortNumber> BubbleSortSortdataList = BubbleSortService.getData();
+							BubbleSortSortdataList.forEach(System.out::println);
 							List<SortNumber> InsertionSortdataList = InsertionSortService.getData();
-							dataList.forEach(e -> sortrepo.save(e));
+							InsertionSortdataList.forEach(System.out::println);
+							JavaStreamSortdataList.forEach(e -> sortrepo.save(e));
 							List<SortNumber> a = sortrepo.findAll();
 							a.forEach(System.out::println);
 						} catch (Exception ex) {
 							ex.printStackTrace();
 						}
 					}
-				}, iniDelay, oneDay, TimeUnit.MILLISECONDS);
+				}, 0, oneDay, TimeUnit.MILLISECONDS);
 		executor.awaitTermination(iniDelay + 60, TimeUnit.SECONDS);
 //		executor.awaitTermination(15, TimeUnit.SECONDS);
-		////////
 		System.out.println(executor.isTerminated());
 		if (!executor.isTerminated()) {
 			executor.shutdownNow();
